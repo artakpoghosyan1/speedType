@@ -11,7 +11,7 @@ export function setTypingText(text: string): IAction {
     }
 }
 
-export function setPassedGame(passedGame: IPassedGame): IAction {
+export function setPassedGame(passedGame: IPassedGame[] | null): IAction {
     return {
         type: actions.SET_PASSED_GAME,
         payload: passedGame

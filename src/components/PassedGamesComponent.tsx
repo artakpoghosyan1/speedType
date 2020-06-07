@@ -7,7 +7,6 @@ import {IPassedGame} from "../shared/models/IPassedGame";
 import {TableRowComponent} from "./TableRowComponent";
 import {css} from "emotion";
 import {typingHelper} from "../shared/helpers/typingHelper";
-import {setPassedGame} from "../store/actionCreators";
 
 export interface IPassedGamesComponentProps {
     passedGames: IPassedGame[]

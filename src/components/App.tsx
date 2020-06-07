@@ -16,7 +16,7 @@ const App: React.FunctionComponent = () => {
         <Container className={containerClass}>
             <Router>
                 <Switch>
-                    <Route exact path="/webb">
+                    <Route exact path="/speedType">
                         <Redirect to="/play"/>
                     </Route>
                     <Route exact strict path="/login">

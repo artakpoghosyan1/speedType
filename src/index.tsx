@@ -8,19 +8,25 @@ import * as serviceWorker from './serviceWorker';
 import {getLocalStorage} from "./shared/utilities/localstorage";
 import {composeEnhancers} from "./store/devTool";
 import {initialState, reducer} from "./store/reducer";
+import {IUser} from "./shared/models/IUser";
+import {IPassedGame} from "./shared/models/IPassedGame";
 
 const storage = getLocalStorage()
 
-// get userData from localstorage to keep persistent login
-const user = storage.getItem('user')
-const userData = {
+// get userData and passedGame from localstorage to keep persistent login
+const user: IUser | null | undefined = storage.getItem('user')
+const passedGames: IPassedGame[] = user && storage.getItem(`passedGames-${user.id}`) ?
+        storage.getItem(`passedGames-${user.id}`) :
+        initialState.passedGames
+const dataFromLocalStorage = {
     ...initialState,
+    passedGames,
     userData: user ? user : initialState.userData
 }
 
 const store = createStore(
     reducer,
-    userData,
+    dataFromLocalStorage,
     composeEnhancers('typeRacer')(applyMiddleware(thunk))
 )
 

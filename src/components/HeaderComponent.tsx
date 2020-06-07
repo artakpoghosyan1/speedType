@@ -2,7 +2,6 @@ import * as React from "react";
 import {useHistory} from "react-router-dom";
 import {RiLogoutCircleRLine} from "react-icons/all";
 import {resetButtonDefaultStyles} from "./styleHelper/mainStyles";
-import {mainTextColor} from "../constants/colors";
 import {css} from "emotion";
 
 import {useLogin} from "./hooks/useLogin";
@@ -11,9 +10,13 @@ import {connect} from "react-redux";
 import {IState} from "../store/IState";
 import {userDataSelector} from "../store/selectors/userDataSelector";
 import {IUser} from "../shared/models/IUser";
+import {Dispatch} from "redux";
+import {setPassedGame} from "../store/actionCreators";
+import {IPassedGame} from "../shared/models/IPassedGame";
 
 interface IHeaderComponentProps {
     userData: IUser | null
+    setPassedGame: (passedGame: IPassedGame[] | null) => void
 }
 
 const headerClass = css`
@@ -32,6 +35,7 @@ const Header: React.FunctionComponent<IHeaderComponentProps> = React.memo((props
     const onLogoutClickHandler = () => {
         logout().then(() => {
             history.push('/login')
+            props.setPassedGame(null)
         })
     }
 
@@ -50,5 +54,9 @@ const mapStateToProps = (state: IState) => ({
     userData: userDataSelector(state)
 })
 
-export const HeaderComponent = connect(mapStateToProps)(Header)
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+    setPassedGame: (passedGames: IPassedGame[] | null) => dispatch(setPassedGame(passedGames))
+})
+
+export const HeaderComponent = connect(mapStateToProps, mapDispatchToProps)(Header)
 

@@ -24,7 +24,7 @@ export const reducer = (state: IState = initialState, action: IAction) => {
         case actionTypes.SET_PASSED_GAME: {
             return {
                 ...state,
-                passedGames: [...state.passedGames, action.payload]
+                passedGames: action.payload ? action.payload : []
             }
         }
 

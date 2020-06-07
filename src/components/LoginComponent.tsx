@@ -5,13 +5,14 @@ import {css} from "emotion";
 import {inputClass, mainBtnClass} from "./styleHelper/mainStyles";
 import {useLogin} from "./hooks/useLogin";
 import {getLocalStorage} from "../shared/utilities/localstorage";
-import {Dispatch} from "redux";
-import {setUserData} from "../store/actionCreators";
+import {setPassedGame, setUserData} from "../store/actionCreators";
 import {connect} from "react-redux";
 import {IUser} from "../shared/models/IUser";
+import {IPassedGame} from "../shared/models/IPassedGame";
 
 interface ILoginComponentProps {
     setUserData: (userData: IUser) => void
+    setPassedGame: (passedGame: IPassedGame[] | null) => void
 }
 
 const loginWrapperClass = css`
@@ -61,6 +62,8 @@ export const Login: React.FunctionComponent<ILoginComponentProps> = React.memo((
         if(userData) {
             storage.setItem('user', userData)
             props.setUserData(userData)
+            const passedGames = storage.getItem(`passedGames-${userData.id}`)
+            props.setPassedGame(passedGames ? passedGames : null)
             history.push('/play')
         }
     }, [userData])
@@ -102,7 +105,8 @@ export const Login: React.FunctionComponent<ILoginComponentProps> = React.memo((
 })
 
 const mapDispatchToProps = (dispatch: any) => ({
-    setUserData: (userData: IUser) => dispatch(setUserData(userData))
+    setUserData: (userData: IUser) => dispatch(setUserData(userData)),
+    setPassedGame: (passedGame: IPassedGame[] | null) => dispatch(setPassedGame(passedGame))
 })
 
 export const LoginComponent = connect(null, mapDispatchToProps)(Login)

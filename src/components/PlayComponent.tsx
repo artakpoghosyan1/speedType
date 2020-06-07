@@ -16,11 +16,17 @@ import {GAME_INTERVAL_SECONDS} from "../constants/gameInterval";
 import {IPassedGame} from "../shared/models/IPassedGame";
 import {PassedGamesComponent} from "./PassedGamesComponent";
 import {HeaderComponent} from "./HeaderComponent";
+import {getLocalStorage} from "../shared/utilities/localstorage";
+import {passedGamesSelector} from "../store/selectors/passedGamesSelector";
+import {userDataSelector} from "../store/selectors/userDataSelector";
+import {IUser} from "../shared/models/IUser";
 
 interface IPlayComponentProps {
     setTypingText: (text: string) => void
-    setPassedGame: (passedGame: IPassedGame) => void
+    setPassedGame: (passedGame: IPassedGame[]) => void
     typingText: string
+    passedGames: IPassedGame[]
+    userData: IUser | null
 }
 
 const textClass = css`
@@ -42,6 +48,8 @@ const startButtonClass = css`
     display: block;
     margin-top: 20px
 `
+
+const storage = getLocalStorage()
 
 const Play: React.FunctionComponent<IPlayComponentProps> = React.memo(props => {
     const [inputValue, setInputValue] = React.useState<string>('')
@@ -80,6 +88,12 @@ const Play: React.FunctionComponent<IPlayComponentProps> = React.memo(props => {
         }
     }, [timer])
 
+    React.useEffect(() => {
+        if (props.passedGames.length) {
+            storage.setItem(`passedGames-${props.userData!.id}`, props.passedGames)
+        }
+    }, [props.passedGames])
+
     const getTextHandler = () => {
         setIsLoading(true)
         setIsStarted(true)
@@ -106,11 +120,12 @@ const Play: React.FunctionComponent<IPlayComponentProps> = React.memo(props => {
         clearInterval(intervalId)
 
         const passedWordsCount = passedWords.split(' ').length
-        props.setPassedGame({
+        const passedGames = [...props.passedGames, {
             wpm,
             correctWordsCount: passedWords.split(' ').length,
             completionPercent: calculateCompletionPercent(passedWordsCount, text)
-        })
+        }]
+        props.setPassedGame(passedGames)
 
         setIsStarted(false)
         setTimer(GAME_INTERVAL_SECONDS)
@@ -230,12 +245,14 @@ const Play: React.FunctionComponent<IPlayComponentProps> = React.memo(props => {
 })
 
 const mapStateToProps = (state: IState) => ({
-    typingText: typingTextSelector(state)
+    typingText: typingTextSelector(state),
+    passedGames: passedGamesSelector(state),
+    userData: userDataSelector(state)
 })
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
     setTypingText: (text: string) => dispatch(setTypingText(text)),
-    setPassedGame: (passedGame: IPassedGame) => dispatch(setPassedGame(passedGame))
+    setPassedGame: (passedGames: IPassedGame[]) => dispatch(setPassedGame(passedGames))
 })
 
 export const PlayComponent = connect(mapStateToProps, mapDispatchToProps)(Play)
