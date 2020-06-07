@@ -1,0 +1,1 @@
+export const GAME_INTERVAL_SECONDS = 60

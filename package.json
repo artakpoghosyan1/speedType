@@ -2,19 +2,32 @@
   "name": "webb",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://artakpoghosyan1.github.io/webb",
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
+    "bootstrap": "^4.5.0",
     "react": "^16.13.1",
+    "react-bootstrap": "^1.0.1",
     "react-dom": "^16.13.1",
-    "react-scripts": "3.4.1"
+    "react-icons": "^3.10.0",
+    "react-redux": "^7.2.0",
+    "react-router-dom": "^5.2.0",
+    "react-scripts": "3.4.1",
+    "redux": "^4.0.5",
+    "redux-thunk": "^2.3.0",
+    "reselect": "^4.0.0",
+    "typescript": "^3.9.2"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "tsc": "tsc",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -30,5 +43,18 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@emotion/core": "^10.0.28",
+    "@emotion/styled": "^10.0.27",
+    "@types/jest": "25.2.2",
+    "@types/node": "14.0.1",
+    "@types/react": "^16.9.35",
+    "@types/react-dom": "16.9.8",
+    "@types/react-redux": "^7.1.9",
+    "@types/react-router-dom": "5.1.5",
+    "@types/redux-thunk": "^2.1.0",
+    "emotion": "10.0.27",
+    "gh-pages": "^3.0.0"
   }
 }
