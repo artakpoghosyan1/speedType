@@ -20,6 +20,7 @@ import {getLocalStorage} from "../shared/utilities/localstorage";
 import {passedGamesSelector} from "../store/selectors/passedGamesSelector";
 import {userDataSelector} from "../store/selectors/userDataSelector";
 import {IUser} from "../shared/models/IUser";
+import {Alert} from "react-bootstrap";
 
 interface IPlayComponentProps {
     setTypingText: (text: string) => void
@@ -63,6 +64,7 @@ const Play: React.FunctionComponent<IPlayComponentProps> = React.memo(props => {
     const [wpm, setWpm] = React.useState<number>(0)
     const [intervalId, setIntervalId] = React.useState<any>(null)
     const [passedWords, setPassedWords] = React.useState<string>('')
+    const [fetchDataFailError, setFetchDataFailError] = React.useState<string>('')
 
     const inputRef: React.RefObject<HTMLInputElement> = React.useRef(null)
     const {getWpm, calculateCompletionPercent} = typingHelper()
@@ -97,14 +99,16 @@ const Play: React.FunctionComponent<IPlayComponentProps> = React.memo(props => {
     const getTextHandler = () => {
         setIsLoading(true)
         setIsStarted(true)
+        setFetchDataFailError('')
 
-        ApiService().fetchData('https://cors-anywhere.herokuapp.com/https://baconipsum.com/api/?type=all-meat&paras=1&start-with-lorem=1', 'GET')
+        ApiService().fetchData('https://cors-anywhere.herokuapp.com/https://baconipsum.com/api/?type=all-meat=1', 'GET')
             .then((data) => {
                 start(data[0])
             })
             .catch((error) => {
                 setIsLoading(false)
                 setIsStarted(false)
+                setFetchDataFailError(`${error}. Try again`)
                 console.log(error)
             })
     }
@@ -203,6 +207,11 @@ const Play: React.FunctionComponent<IPlayComponentProps> = React.memo(props => {
 
     return <div>
         <HeaderComponent/>
+        {fetchDataFailError &&
+            <Alert variant='danger'>
+                {fetchDataFailError}
+            </Alert>
+        }
         <ProgressPanelComponent time={timer} wpm={wpm}/>
 
         <div className={textClass}>
