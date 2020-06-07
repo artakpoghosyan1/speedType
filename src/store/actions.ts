@@ -1,0 +1,3 @@
+export const SET_TYPING_TEXT = 'SET_TYPING_TEXT'
+export const SET_PASSED_GAME = 'SET_PASSED_GAME'
+export const SET_USER_DATA = 'TOGGLE_LOGE_IN'
