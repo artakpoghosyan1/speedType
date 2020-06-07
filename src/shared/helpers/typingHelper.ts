@@ -1,9 +1,8 @@
-import {GAME_INTERVAL_SECONDS} from "../../constants/gameInterval";
 import {IPassedGame} from "../models/IPassedGame";
 
 export function typingHelper() {
     const getWpm = (characters: string, timer: number) => {
-        return Math.round((characters.length * GAME_INTERVAL_SECONDS) / (timer * 5))
+        return Math.round((characters.length / 5))
     }
 
     const calculateCompletionPercent = (wordsCount: number, text: string): number => {
