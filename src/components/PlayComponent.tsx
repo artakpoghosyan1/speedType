@@ -102,9 +102,10 @@ const Play: React.FunctionComponent<IPlayComponentProps> = React.memo(props => {
             .then((data) => {
                 start(data[0])
             })
-            .catch(() => {
+            .catch((error) => {
                 setIsLoading(false)
                 setIsStarted(false)
+                console.log(error)
             })
     }
 

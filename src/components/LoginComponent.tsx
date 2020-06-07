@@ -76,9 +76,8 @@ export const Login: React.FunctionComponent<ILoginComponentProps> = React.memo((
                     {error}
                 </Alert>
                 }
-                <Form.Group controlId="validationCustom01">
+                <Form.Group>
                     <Form.Control
-                        required
                         ref={usernameRef}
                         className={`${inputClass} `}
                         type="text"
@@ -86,9 +85,8 @@ export const Login: React.FunctionComponent<ILoginComponentProps> = React.memo((
                     />
                 </Form.Group>
 
-                <Form.Group controlId="formBasicPassword">
+                <Form.Group>
                     <Form.Control
-                        required
                         ref={passwordRef}
                         className={`${inputClass}`}
                         type="password"

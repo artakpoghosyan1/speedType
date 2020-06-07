@@ -1,9 +1,9 @@
 import * as React from 'react'
-import {RiLoader2Line} from "react-icons/all";
-import {css, keyframes} from "emotion";
-import {mainColor} from "../constants/colors";
+import {css, keyframes} from "emotion"
+import {mainColor} from "../constants/colors"
+import {RiLoader2Line} from "react-icons/all"
 
-interface ILoadingComponentProps {
+export interface ILoadingComponentProps {
     isLoading: boolean
 }
 const loadingRotate = keyframes`
@@ -33,7 +33,7 @@ const loadingIconClass = css`
 `
 
 export const LoadingComponent: React.FunctionComponent<ILoadingComponentProps> = React.memo(props => {
-    return props.isLoading ? <div className={loadingClass}>
+    return props.isLoading ? <div className={loadingClass} data-testid='loading'>
         <RiLoader2Line size='40px' color={mainColor} className={loadingIconClass}/>
     </div> : null
 })
