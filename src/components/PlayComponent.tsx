@@ -119,10 +119,11 @@ const Play: React.FunctionComponent<IPlayComponentProps> = React.memo(props => {
     const finishGame = () => {
         clearInterval(intervalId)
 
-        const passedWordsCount = passedWords.split(' ').length
+        const passedWordsCount = passedWords ? passedWords.split(' ').length : 0
+        const correctWordsCount = passedWords ? passedWords.split(' ').length : 0
         const passedGames = [...props.passedGames, {
             wpm,
-            correctWordsCount: passedWords.split(' ').length,
+            correctWordsCount,
             completionPercent: calculateCompletionPercent(passedWordsCount, text)
         }]
         props.setPassedGame(passedGames)

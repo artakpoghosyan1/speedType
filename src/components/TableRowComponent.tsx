@@ -7,7 +7,7 @@ export interface ITableRowComponentProps {
 }
 
 export const TableRowComponent: React.FunctionComponent<ITableRowComponentProps> = React.memo(props => {
-    const {index, data: {wpm, completionPercent, correctWordsCount}} = props
+    const {index, data: {wpm, correctWordsCount, completionPercent}} = props
 
     return <tr>
         <td>{index ? index : 'Average'}</td>
